@@ -1,16 +1,93 @@
-# React + Vite
+# Buttons with a Brain
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small React + JavaScript interaction demo demonstrating how a button can communicate its complete lifecycle through state and intentional motion.
 
-Currently, two official plugins are available:
+## What This Project Demonstrates
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The project contains a reusable `SmartButton` with the following states:
 
-## React Compiler
+* Idle
+* Hover / Focus
+* Loading
+* Success
+* Error
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The button prevents repeated submissions while loading and supports retry after failure.
 
-## Expanding the ESLint configuration
+## Deterministic Demo Controls
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The page includes:
+
+* **Force Success** — reliably demonstrates the loading → success flow.
+* **Force Error** — reliably demonstrates the loading → error flow.
+
+These controls are provided so reviewers can reproduce both outcomes on demand.
+
+## Accessibility
+
+The button is implemented using a native HTML button and supports keyboard interaction with a visible focus state.
+
+State information is exposed through accessible status feedback, and the interface does not depend on color alone to communicate success or failure.
+
+The project also respects `prefers-reduced-motion` by reducing non-essential animation while preserving state feedback.
+
+## Motion
+
+State transitions use a **280ms** duration with the easing:
+
+```css
+cubic-bezier(.22, .8, .2, 1)
+```
+
+The implementation focuses on transform and opacity-based motion where possible to keep transitions responsive.
+
+More detail is available in [`MOTION_NOTES.md`](./MOTION_NOTES.md).
+
+## Technology
+
+* React
+* JavaScript
+* Vite
+* CSS
+
+## Run Locally
+
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+```text
+src/
+├── components/
+│   └── SmartButton.jsx
+├── App.jsx
+├── App.css
+└── index.css
+```
+
+## AI Assistance
+
+GitHub Copilot Agent was used as a development assistant for the initial implementation and verification of the button lifecycle, accessibility behavior, motion system, and deterministic success/error controls.
+
+The AI-generated implementation was manually reviewed and tested before completion.
+
+## Manual Review
+
+After AI implementation, the application was manually reviewed and tested for:
+
+* Success and error flows
+* Retry behavior
+* Rapid clicking
+* Keyboard activation
+* Visible focus
+* Reduced-motion behavior
+* General UI responsiveness
